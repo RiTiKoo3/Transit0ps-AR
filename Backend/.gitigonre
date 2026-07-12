@@ -1,0 +1,32 @@
+# Environment variables - NEVER commit secrets (DB creds, JWT_SECRET)
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Test artifacts
+/tmp/*.json
+/tmp/*.csv
+
+# Build output (if you add a frontend build later in this same repo)
+dist/
+build/
+
+# nodemon
+.nodemon-debug
