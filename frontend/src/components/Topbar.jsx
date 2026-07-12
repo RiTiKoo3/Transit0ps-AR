@@ -1,7 +1,9 @@
 import { Search } from "lucide-react";
-import { currentUser } from "../data/mockData";
+import { useAuth } from "../context/AuthContext";
 
 export default function Topbar({ title }) {
+  const { user, roleLabel } = useAuth();
+
   return (
     <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-3.5">
       <h1 className="text-base font-bold text-ink-900">{title}</h1>
@@ -20,9 +22,9 @@ export default function Topbar({ title }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-ink-800">{currentUser.name}</span>
+          <span className="text-sm font-medium text-ink-800">{user?.name}</span>
           <span className="flex h-7 items-center rounded-full bg-blue-50 px-2.5 text-xs font-semibold text-blue-600 ring-1 ring-inset ring-blue-200">
-            {currentUser.role}
+            {roleLabel}
           </span>
         </div>
       </div>

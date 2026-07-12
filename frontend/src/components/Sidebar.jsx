@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Truck,
@@ -8,20 +8,33 @@ import {
   Fuel,
   BarChart3,
   Settings,
+  LogOut,
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { navAccess } from "../lib/roles";
 
 const NAV_ITEMS = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
-  { to: "/fleet", label: "Fleet", icon: Truck },
-  { to: "/drivers", label: "Drivers", icon: Users },
-  { to: "/trips", label: "Trips", icon: Route },
-  { to: "/maintenance", label: "Maintenance", icon: Wrench },
-  { to: "/fuel-expenses", label: "Fuel & Expenses", icon: Fuel },
-  { to: "/analytics", label: "Analytics", icon: BarChart3 },
-  { to: "/settings", label: "Settings", icon: Settings },
+  { key: "dashboard", to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
+  { key: "fleet", to: "/fleet", label: "Fleet", icon: Truck },
+  { key: "drivers", to: "/drivers", label: "Drivers", icon: Users },
+  { key: "trips", to: "/trips", label: "Trips", icon: Route },
+  { key: "maintenance", to: "/maintenance", label: "Maintenance", icon: Wrench },
+  { key: "fuel-expenses", to: "/fuel-expenses", label: "Fuel & Expenses", icon: Fuel },
+  { key: "analytics", to: "/analytics", label: "Analytics", icon: BarChart3 },
+  { key: "settings", to: "/settings", label: "Settings", icon: Settings },
 ];
 
 export default function Sidebar() {
+  const { role, logout } = useAuth();
+  const navigate = useNavigate();
+  const visibleKeys = navAccess(role);
+  const items = NAV_ITEMS.filter((item) => visibleKeys.includes(item.key));
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
+
   return (
     <aside className="flex h-full w-60 shrink-0 flex-col bg-ink-950 text-slate-300">
       <div className="flex items-center gap-2.5 px-5 py-6">
@@ -33,7 +46,7 @@ export default function Sidebar() {
       </div>
 
       <nav className="flex-1 space-y-1 px-3">
-        {NAV_ITEMS.map(({ to, label, icon: Icon, end }) => (
+        {items.map(({ to, label, icon: Icon, end }) => (
           <NavLink
             key={to}
             to={to}
@@ -60,6 +73,16 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
+
+      <div className="px-3 pb-2">
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-400 transition hover:bg-ink-900 hover:text-red-400"
+        >
+          <LogOut size={16} strokeWidth={2} />
+          Log out
+        </button>
+      </div>
 
       <div className="px-5 py-5 text-[10px] text-slate-600">
         TransitOps © 2026 · RBAC Enabled

@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import VehicleRegistry from "./pages/VehicleRegistry";
@@ -11,16 +13,19 @@ import Settings from "./pages/Settings";
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/fleet" element={<VehicleRegistry />} />
-      <Route path="/drivers" element={<Drivers />} />
-      <Route path="/trips" element={<Trips />} />
-      <Route path="/maintenance" element={<Maintenance />} />
-      <Route path="/fuel-expenses" element={<FuelExpenses />} />
-      <Route path="/analytics" element={<Analytics />} />
-      <Route path="/settings" element={<Settings />} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/" element={<ProtectedRoute page="dashboard"><Dashboard /></ProtectedRoute>} />
+        <Route path="/fleet" element={<ProtectedRoute page="fleet"><VehicleRegistry /></ProtectedRoute>} />
+        <Route path="/drivers" element={<ProtectedRoute page="drivers"><Drivers /></ProtectedRoute>} />
+        <Route path="/trips" element={<ProtectedRoute page="trips"><Trips /></ProtectedRoute>} />
+        <Route path="/maintenance" element={<ProtectedRoute page="maintenance"><Maintenance /></ProtectedRoute>} />
+        <Route path="/fuel-expenses" element={<ProtectedRoute page="fuel-expenses"><FuelExpenses /></ProtectedRoute>} />
+        <Route path="/analytics" element={<ProtectedRoute page="analytics"><Analytics /></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute page="settings"><Settings /></ProtectedRoute>} />
+      </Routes>
+    </AuthProvider>
   );
 }

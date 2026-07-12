@@ -199,7 +199,10 @@ const getAllTrips = async (req, res) => {
     let whereClause = "";
     if (status) {
       values.push(status);
-      whereClause = `WHERE status = $1`;
+      // Qualified as t.status - trips, vehicles, AND drivers all have a `status`
+      // column, so an unqualified `status` here is ambiguous once vehicles/drivers
+      // are joined in below (Postgres error 42702).
+      whereClause = `WHERE t.status = $1`;
     }
 
     const result = await pool.query(

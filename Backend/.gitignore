@@ -1,20 +1,14 @@
 # Dependencies
 node_modules/
 
-# Build output
-dist/
-dist-ssr/
-
 # Environment variables (secrets - never commit)
 .env
 .env.local
-.env.*.local
 
 # Logs
 logs/
 *.log
 npm-debug.log*
-vite.config.js.timestamp-*
 
 # OS files
 .DS_Store
@@ -22,7 +16,8 @@ Thumbs.db
 
 # Editor
 .vscode/
-!.vscode/extensions.json
 .idea/
-*.suo
 *.swp
+
+# Test artifacts
+coverage/
