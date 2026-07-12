@@ -9,7 +9,7 @@ const DOT_TONE = {
 
 export default function KpiCard({ label, value, tone = "available" }) {
   return (
-    <div className="card flex flex-1 min-w-[140px] flex-col gap-2 px-4 py-3.5">
+    <div className="card flex flex-1 min-w-[140px] flex-col gap-2 px-4 py-3.5 transition-shadow duration-200 hover:shadow-card-hover">
       <div className="flex items-center gap-2">
         <span className={`h-1.5 w-1.5 rounded-full ${DOT_TONE[tone] || DOT_TONE.available}`} />
         <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">

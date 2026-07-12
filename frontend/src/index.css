@@ -23,7 +23,7 @@ body {
 
 @layer components {
   .card {
-    @apply bg-white rounded-xl border border-slate-200 shadow-card;
+    @apply bg-white rounded-xl border border-slate-200 shadow-card overflow-x-auto;
   }
   .input {
     @apply w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-ink-900 placeholder-slate-400 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20;
@@ -40,10 +40,30 @@ body {
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-ink-900;
   }
+  .icon-btn {
+    @apply inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-ink-900 active:scale-[0.96];
+  }
   .th {
     @apply px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-400;
   }
   .td {
     @apply px-4 py-3 text-sm text-ink-800;
   }
+  .popover {
+    @apply rounded-xl border border-slate-200 bg-white py-1.5 shadow-popover animate-scale-in;
+  }
+}
+
+/* Smooth cross-browser scroll behavior for the sliding drawer + main content */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Keep focus rings keyboard-only for a cleaner mouse-driven UI, without losing a11y */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid #f5a623;
+  outline-offset: 2px;
 }
